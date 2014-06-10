@@ -5,7 +5,7 @@ reconnecting websockets onto a page.  If multiple URLs are provided,
 the socket will automatically connect to the fastest and roll through
 them in the event that a connection is lost.
 
-    _       = require('../node_modules/lodash/dist/lodash.js')
+    _       = require('lodash')
     HuntingWebsocket  = require('./hunting-websocket.litcoffee')
 
     Polymer 'core-websocket',
