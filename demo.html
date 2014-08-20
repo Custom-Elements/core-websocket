@@ -5,7 +5,7 @@
     <title>core-websocket</title>
     <script src="node_modules/polymer/platform.js"></script>
     <link rel="import" href="node_modules/polymer/polymer.html">
-    <link rel="import" href="build/core-websocket.html">
+    <link rel="import" href="src/core-websocket.html">
     <style>
       body {
         font-family: "Helvetica Neue", "Helvetica", Arial;
@@ -44,7 +44,7 @@
     </div>
     <script>
       document.addEventListener('polymer-ready', function() {
-        
+
         var input = document.querySelector('#input'),
             nectar = document.querySelector("#nectar-ws"),
             resultsTmpl = document.querySelector("#results");
@@ -54,14 +54,14 @@
         });
 
         input.addEventListener('keyup', function() {
-          
+
           nectar.send({ entity: 'cm', query: input.value, options: { howMany: 10, interleave: false } }, function(data) {
 
             resultsTmpl.model = {
               results: data.results.cm
             }
 
-            Platform.performMicrotaskCheckpoint(); 
+            Platform.performMicrotaskCheckpoint();
           });
         });
       })
