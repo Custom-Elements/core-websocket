@@ -1,9 +1,8 @@
 <!doctype html>
-
 <html>
   <head>
     <title>core-websocket</title>
-    <script src="node_modules/polymer/platform.js"></script>
+    <script src="node_modules/webcomponents.js/webcomponents.js"></script>
     <link rel="import" href="node_modules/polymer/polymer.html">
     <link rel="import" href="src/core-websocket.html">
     <style>
@@ -23,28 +22,27 @@
         color: #454545;
         margin-bottom: .5em;
       }
-
     </style>
   </head>
   <body unresolved>
+    <core-websocket id="nectar-ws" urls="wss://nectar.glgroup.com/ws"></core-websocket>
     <div id="holder">
-
-      <input id="input" type="text" />
-
-      <h3>Results</h3>
+      <h1>core-websocket</h1>
+      <div>
+        A polymer websocket adapter that provides a declarative way to drop
+        reconnecting websockets onto a page.  If multiple URLs are provided,
+        the socket will automatically connect to the fastest and roll through
+        them in the event that a connection is lost.
+      </div>
+      <input id="input" type="text" placeholder="type name here" label="Input:" style="margin: 20px 0px;"/>
       <template id="results" repeat="{{results}}">
         <div class="result">
-          {{name}} at {{company}}
+          <span style="font-weight: bold;">{{name}}</span>, <span style="font-style: italic;">{{company}}</span>
         </div>
       </template>
-
-      <core-websocket id="nectar-ws" urls="wss://nectar.glgroup.com/ws">
-      </core-websocket>
-
     </div>
     <script>
       document.addEventListener('polymer-ready', function() {
-
         var input = document.querySelector('#input'),
             nectar = document.querySelector("#nectar-ws"),
             resultsTmpl = document.querySelector("#results");
@@ -54,13 +52,10 @@
         });
 
         input.addEventListener('keyup', function() {
-
           nectar.send({ entity: 'cm', query: input.value, options: { howMany: 10, interleave: false } }, function(data) {
-
             resultsTmpl.model = {
               results: data.results.cm
             }
-
             Platform.performMicrotaskCheckpoint();
           });
         });
